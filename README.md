@@ -1,2 +1,2 @@
-#ssm-config
-SSM¿ò¼ÜÅäÖÃ¼ÇÂ¼
+# ssm-config
+SSMæ¡†æ¶é…ç½®è®°å½•
