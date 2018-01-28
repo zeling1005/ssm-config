@@ -22,6 +22,18 @@
             </tr>
         </table>
     </mvc:form>
+	<%-- <mvc:form modelAttribute="commonFile" action="result/two.mvc"
+        enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td>Choose File</td>
+                <td><mvc:input type="file" path="file" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Submit" /></td>
+            </tr>
+        </table>
+    </mvc:form> --%>
     
     <!-- 普通上传文件 -->
 	<!-- <form method="post" action="result/one.mvc" enctype="multipart/form-data">

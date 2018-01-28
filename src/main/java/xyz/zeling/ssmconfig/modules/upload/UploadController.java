@@ -35,4 +35,12 @@ public class UploadController {
         result.addObject("fileLength", file.getBytes().length);
         return result;
     }
+    
+    @RequestMapping("/result/two")
+    public ModelAndView uploadResultTwo(@RequestParam("file") MultipartFile file) throws IOException {
+        ModelAndView result = new ModelAndView("/upload/main");
+        result.addObject("commonFile", new CommonFile());
+        result.addObject("fileLength", file.getBytes().length);
+        return result;
+    }
 }
