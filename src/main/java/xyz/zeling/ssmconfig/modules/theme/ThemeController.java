@@ -17,17 +17,4 @@ public class ThemeController {
     public ModelAndView main() {
         return new ModelAndView("/theme/main");
     }
-
-    @RequestMapping("/form")
-    public ModelAndView user() {
-        return new ModelAndView("/theme/form", "user", new User());
-    }
-
-    @RequestMapping("/result")
-    public ModelAndView processUser(User user) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("u", user);
-        modelAndView.setViewName("/theme/result");
-        return modelAndView;
-    }
 }
