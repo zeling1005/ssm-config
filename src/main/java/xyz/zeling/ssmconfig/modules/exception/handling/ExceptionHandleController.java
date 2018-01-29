@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @date 2018年1月29日 上午12:44:51
  */
 @Controller
-@RequestMapping("/exception/handling")
+@RequestMapping("exception/handling")
 public class ExceptionHandleController {
     private Map<String, User> users = new HashMap<String, User>();
 
@@ -25,17 +25,17 @@ public class ExceptionHandleController {
         users.put("kenan", new User("Kenan", "Sevindik"));
     }
 
-    @RequestMapping("/main")
+    @RequestMapping("main")
     public ModelAndView toMain() {
         return new ModelAndView("/exception/handling/main");
     }
 
-    @RequestMapping("/form")
+    @RequestMapping("form")
     public ModelAndView user() {
-        return new ModelAndView("/exception/handling/userForm", "user", new User());
+        return new ModelAndView("exception/handling/userForm", "user", new User());
     }
 
-    @RequestMapping("/result")
+    @RequestMapping("result")
     public ModelAndView processUser(String name) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         User user = users.get(name);
@@ -46,7 +46,7 @@ public class ExceptionHandleController {
             throw new UserNotFoundException(name);
         }
         modelAndView.addObject("u", user);
-        modelAndView.setViewName("/exception/handling/userResult");
+        modelAndView.setViewName("exception/handling/userResult");
         return modelAndView;
     }
     
@@ -59,7 +59,7 @@ public class ExceptionHandleController {
      */
     /*@ExceptionHandler(UserNotFoundException.class)
     public ModelAndView handleException(UserNotFoundException e) {
-        ModelAndView modelAndView = new ModelAndView("/exception/handling/errorUser");
+        ModelAndView modelAndView = new ModelAndView("exception/handling/errorUser");
         modelAndView.addObject("errorMessage", e.getMessage());
         return modelAndView;
     }*/

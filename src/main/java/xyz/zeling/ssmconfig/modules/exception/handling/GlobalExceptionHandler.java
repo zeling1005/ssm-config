@@ -16,6 +16,6 @@ public class GlobalExceptionHandler {
     public ModelAndView handleException(Exception e) {
         System.out.println("打印异常信息：");
         e.printStackTrace();
-        return new ModelAndView("/exception/handling/errorGlobal");
+        return new ModelAndView("exception/handling/errorGlobal");
     }
 }

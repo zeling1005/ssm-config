@@ -14,21 +14,19 @@ import org.springframework.web.servlet.ModelAndView;
  * @date 2018年1月27日 下午2:29:42
  */
 @Controller
-@RequestMapping("/validator")
+@RequestMapping("validator")
 public class ValidatorController {
-    @RequestMapping("/main")
+    @RequestMapping("main")
     public ModelAndView toMain(HttpServletRequest request) {
         return new ModelAndView("validator/main");
     }
 
-    @RequestMapping(
-        value = "/form")
+    @RequestMapping("form")
     public ModelAndView user() {
         return new ModelAndView("validator/userForm", "user", new User());
     }
 
-    @RequestMapping(
-        value = "/result")
+    @RequestMapping("result")
     public ModelAndView processUser(@Valid User user, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("u", user);

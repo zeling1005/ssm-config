@@ -11,10 +11,10 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 // 只要有加一级的路径，主题就死活应用不上，我也很绝望啊
-// @RequestMapping("/theme")
+// @RequestMapping("theme")
 public class ThemeController {
-    @RequestMapping("/main")
-    public ModelAndView main() {
-        return new ModelAndView("/theme/main");
+    @RequestMapping("main")
+    public ModelAndView toMain() {
+        return new ModelAndView("theme/main");
     }
 }
