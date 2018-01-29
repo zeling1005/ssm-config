@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @date 2018年1月29日 下午8:32:30
  */
 @Controller
+// 只要有加一级的路径，主题就死活应用不上，我也很绝望啊
 // @RequestMapping("/theme")
 public class ThemeController {
     @RequestMapping("/main")
