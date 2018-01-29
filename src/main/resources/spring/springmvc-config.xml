@@ -58,6 +58,17 @@
 		class="org.springframework.web.servlet.theme.SessionThemeResolver">
 		<property name="defaultThemeName" value="light" />
 	</bean>
+	
+	<!-- 异常处理方式一，使用SimpleMappingExceptionResolver  -->
+    <!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView" value="/exception/handle/errorGlobal" />
+        <property name="exceptionAttribute" value="e" />
+        <property name="exceptionMappings">
+            <props>
+                <prop key="xyz.zeling.exception.handle.modules.exception.handle.UserNotFoundException">/exception/handling/errorUser</prop>
+            </props>
+        </property>
+    </bean> -->
 
 	<!-- 拦截器 -->
 	<mvc:interceptors>
