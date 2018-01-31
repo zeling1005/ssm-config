@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Spring MVC Themes</title>
-    <link rel="stylesheet" href="<spring:theme code="style"/>" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/<spring:theme code="style"/>" type="text/css" />
 </head>
 <body>
 Theme :
