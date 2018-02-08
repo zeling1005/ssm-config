@@ -46,30 +46,30 @@
 	<servlet>
 		<servlet-name>DruidStatView</servlet-name>
 		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
-		<init-param>
-			<!-- 设定允许访问ip，allow没有配置或者为空则允许所有ip访问 -->
+		<!-- 设定允许访问ip，allow没有配置或者为空则允许所有ip访问 -->
+		<!-- <init-param>
 			<param-name>allow</param-name>
 			<param-value>128.242.127.1/24,128.242.128.1</param-value>
-		</init-param>
-		<init-param>
-			<!-- 设定不允许访问ip，deny权限优先于allow -->
+		</init-param> -->
+		<!-- 设定不允许访问ip，deny权限优先于allow -->
+		<!-- <init-param>
 			<param-name>deny</param-name>
 			<param-value>128.242.127.4</param-value>
-		</init-param>
+		</init-param> -->
+		<!-- 用户名 -->
 		<init-param>
-			<!-- 用户名 -->
 			<param-name>loginUsername</param-name>
 			<param-value>druid</param-value>
 		</init-param>
+		<!-- 密码 -->
 		<init-param>
-			<!-- 密码 -->
 			<param-name>loginPassword</param-name>
 			<param-value>druid</param-value>
 		</init-param>
 	</servlet>
+	<!-- 访问 ip:port/project/druid/index.html -->
 	<servlet-mapping>
 		<servlet-name>DruidStatView</servlet-name>
-		<!-- 访问 ip:port/project/druid/index.html -->
 		<url-pattern>/druid/*</url-pattern>
 	</servlet-mapping>
 
