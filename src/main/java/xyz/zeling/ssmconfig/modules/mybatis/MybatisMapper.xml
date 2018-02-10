@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.zeling.ssmconfig.modules.mybatis.MybatisMapper">
+	<resultMap id="defaultResultMap" type="xyz.zeling.ssmconfig.modules.mybatis.MybatisModel">
+		<id property="id" column="id" />
+		<result property="rtxno" column="rtxno" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="email" column="email" />
+		<result property="realname" column="realname" />
+	</resultMap>
+	
+	<select id="listMybatisModel" resultMap="defaultResultMap">
+		SELECT
+			u.id,
+			u.rtxno,
+			u.username,
+			u.`password`,
+			u.email,
+			u.realname
+		FROM
+			`ke_users` u
+	</select>
+	
+	<delete id="deleteMybatisModel" parameterType="java.util.Map">
+		DELETE u
+		FROM
+			ke_users u
+		WHERE
+			u.username = #{username}
+	</delete>
+	
+	<insert id="insertMybatisModel" parameterType="xyz.zeling.ssmconfig.modules.mybatis.MybatisModel" useGeneratedKeys="true">
+		INSERT INTO ke_users (
+			rtxno,
+			username,
+			`password`,
+			email,
+			realname
+		)
+		VALUES
+			(
+				#{entity.rtxno},
+				#{entity.username},
+				#{entity.password},
+				#{entity.email},
+				#{entity.realname}
+			)
+	</insert>
+</mapper>
