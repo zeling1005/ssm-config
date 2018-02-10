@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -13,7 +11,7 @@
 	<!-- 加载properties文件 -->
 	<bean id="propertiesConfigurerForMybatis"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<!-- 使用多个PropertyPlaceholderConfigurer的bean时，需要指定不同的加载顺序 ,ignoreUnresolvablePlaceholders也要设置为true-->
+		<!-- 使用多个PropertyPlaceholderConfigurer的bean时，需要指定不同的加载顺序 ,ignoreUnresolvablePlaceholders也要设置为true -->
 		<property name="order" value="1" />
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 		<property name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 -->
@@ -66,7 +64,7 @@
 	<!-- 这个类负责管理 MyBatis 的 SqlSession, 调用 MyBatis 的 SQL 方法, 翻译异常 -->
 	<!-- 非事务环境下，每次操作数据库都使用新的sqlSession对象。因此mybatis的一级缓存无法使用 -->
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSessionFactory" /> 
+		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	<!--mapper扫描器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -76,4 +74,37 @@
 		<property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate" />
 	</bean>
 	<!-- 事务 -->
+	<!-- 事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 事务相关控制配置：例如配置事务的传播机制，如果回滚等 -->
+	<tx:advice id="mybatisTxAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 任何 RuntimeException{java.lang.RuntimeException,java.lang.Error} 将触发事务回滚，但是任何 
+				checked Exception{java.lang.Exception} 将不触发事务回滚 。如果一个异常同时作用于rollback-for和no-rollback-for,那么将触发rollback-for。基于默认回滚策略的话，方法中需要显示处理RuntimeException -->
+			<!-- 增 -->
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false" />
+			<tx:method name="save*" propagation="REQUIRED" read-only="false" />
+			<tx:method name="add*" propagation="REQUIRED" read-only="false" />
+			<!-- 删 -->
+			<tx:method name="del*" propagation="REQUIRED" read-only="false" />
+			<!-- 查 -->
+			<!-- 配置上只读，有一些优化 -->
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="query*" propagation="REQUIRED" read-only="true" />
+			<!-- 改 -->
+			<tx:method name="update*" propagation="REQUIRED" read-only="false" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<!-- execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-pattern(param-pattern)throws-pattern?) -->
+		<!-- ret-type-pattern：可以为*表示任何返回值,全路径的类名等. -->
+		<!-- name-pattern：指定方法名-->
+		<!-- param-pattern：指定方法参数 -->
+		<!-- 'execution(* xyz.zeling..*Service.*(..))'xyz.zeling包下及其子包下所有的以Service结尾的类中的任意方法 -->
+		<aop:pointcut expression="execution(* xyz.zeling..*Service.*(..))" id="mybatisInterceptorPointCut" />
+		<aop:advisor advice-ref="mybatisTxAdvice" pointcut-ref="mybatisInterceptorPointCut" />
+	</aop:config>
 </beans>
