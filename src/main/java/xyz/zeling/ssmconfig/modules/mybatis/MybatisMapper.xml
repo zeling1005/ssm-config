@@ -30,7 +30,7 @@
 			u.username = #{username}
 	</delete>
 	
-	<insert id="insertMybatisModel" parameterType="xyz.zeling.ssmconfig.modules.mybatis.MybatisModel" useGeneratedKeys="true">
+	<insert id="insertMybatisModel" parameterType="xyz.zeling.ssmconfig.modules.mybatis.MybatisModel" useGeneratedKeys="true" keyProperty="entity.id">
 		INSERT INTO ke_users (
 			rtxno,
 			username,
