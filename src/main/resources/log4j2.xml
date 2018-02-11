@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
-<configuration status="error" monitorInterval="30">
+<configuration status="debug" monitorInterval="30">
 	<!-- 先定义所有的appender -->
 	<appenders>
 		<!-- 这个输出控制台的配置 -->
 		<Console name="Console" target="SYSTEM_OUT">
 			<!-- 控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
-			<ThresholdFilter level="warn" onMatch="ACCEPT"
+			<ThresholdFilter level="debug" onMatch="ACCEPT"
 				onMismatch="DENY" />
 			<!-- 这个都知道是输出日志的格式 -->
 			<PatternLayout pattern="[%d{HH:mm:ss.SSS}] [%-5p] %l - %m%n" />
@@ -36,8 +36,8 @@
 	<!-- 然后定义logger，只有定义了logger并引入的appender，appender才会生效 -->
 	<loggers>
 		<!-- 过滤掉spring和mybatis的一些无用的DEBUG信息 -->
-		<logger name="org.springframework" level="INFO"></logger>
-		<logger name="org.mybatis" level="INFO"></logger>
+		<!-- <logger name="org.springframework" level="INFO"></logger> -->
+		<!-- <logger name="org.mybatis" level="INFO"></logger> -->
 		<!-- 建立一个默认的root的logger -->
 		<root level="trace">
 			<appender-ref ref="RollingFile" />

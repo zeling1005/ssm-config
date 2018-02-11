@@ -70,7 +70,6 @@
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="xyz.zeling" />
 		<!-- 如果只有一个数据源的话可以不用指定，但是如果有多个数据源的话必须要指定 -->
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 		<property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate" />
 	</bean>
 	<!-- 事务 -->
