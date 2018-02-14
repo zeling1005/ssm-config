@@ -9,4 +9,5 @@
 	<!-- 若要注入的BEAN不在同一个配置文件中，则必须将两个配置文件放在同一个ConfigSet中，项目右键属性 -->
 	<import resource="classpath:spring/spring-common.xml" />
 	<import resource="classpath:spring/spring-mybatis.xml" />
+	<import resource="classpath:spring/spring-shiro.xml" />
 </beans>

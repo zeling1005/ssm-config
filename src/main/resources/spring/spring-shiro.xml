@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
@@ -11,7 +9,7 @@
 	<!-- 设置密码加密策略:MD5+salt -->
 	<bean id="customCredentialsMatcher"
 		class="xyz.zeling.ssmconfig.modules.shiro.CustomCredentialsMatcher" />
-		
+
 	<!-- Define the Shiro Realm implementation you want to use to connect to 
 		your back-end security datasource: -->
 	<bean id="userRrealm" class="xyz.zeling.ssmconfig.modules.shiro.UserRrealm">
@@ -26,7 +24,7 @@
 			this line to use shiro's native sessions (see the JavaDoc for more): -->
 		<!-- <property name="sessionMode" value="native"/> -->
 	</bean>
-	
+
 	<!-- For simplest integration, so that all SecurityUtils.* methods work 
 		in all cases, make the securityManager bean a static singleton. DO NOT do 
 		this in web applications - see the 'Web Applications' section below instead. -->
@@ -36,7 +34,7 @@
 			value="org.apache.shiro.SecurityUtils.setSecurityManager" />
 		<property name="arguments" ref="securityManager" />
 	</bean>
-	
+
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<!-- override these for application-specific URLs if you like: -->
@@ -47,26 +45,24 @@
 			bean defined will be automatically acquired and available via its beanName 
 			in chain definitions, but you can perform instance overrides or name aliases 
 			here if you like: -->
-		<!-- <property name="filters">
-			<util:map>
-				<entry key="anAlias" value-ref="someFilter" />
-			</util:map>
-		</property> -->
+		<!-- <property name="filters"> <util:map> <entry key="anAlias" value-ref="someFilter" 
+			/> </util:map> </property> -->
 		<property name="filterChainDefinitions">
 			<value>
 				# some example chain definitions:
-				/admin/** = authc,
-				roles[admin]
-				/docs/** = authc, perms[document:read]
-				/** = authc
-				# more
-				URL-to-FilterChain definitions here
+				# /admin/** = authc, roles[admin]
+				# /docs/** = authc, perms[document:read]
+				# /** = authc
+				# more URL-to-FilterChain definitions here
+				/shiro/login = anon
+				/shiro/logout = anon
+				/shiro/** = authc
 			</value>
 		</property>
 	</bean>
 	<!-- 管理shiro生命周期 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
-	
+
 	<!-- Define any javax.servlet.Filter beans you want anywhere in this application 
 		context. They will automatically be acquired by the 'shiroFilter' bean above 
 		and made available to the 'filterChainDefinitions' property. Or you can manually/explicitly 
@@ -74,4 +70,10 @@
 		more details. -->
 	<!-- <bean id="someFilter" class="..."/> -->
 	<!-- <bean id="anotherFilter" class="..."> ... </bean> -->
+
+	<!-- Enable Shiro Annotations for Spring-configured beans. Only run after 
+		the lifecycleBeanProcessor has run: -->
+	<!-- <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" 
+		depends-on="lifecycleBeanPostProcessor" /> <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"> 
+		<property name="securityManager" ref="securityManager" /> </bean> -->
 </beans>
