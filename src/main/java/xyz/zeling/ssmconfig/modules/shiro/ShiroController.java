@@ -20,11 +20,11 @@ import org.springframework.web.servlet.ModelAndView;
  * @date 2018年2月13日 上午1:18:14
  */
 @Controller
-@RequestMapping("shiro")
+@RequestMapping("/shiro")
 public class ShiroController {
-    @RequestMapping("main")
+    @RequestMapping("/main")
     public ModelAndView toMain() {
-        return new ModelAndView("shiro/main");
+        return new ModelAndView("/shiro/main");
     }
 
     @RequestMapping("login")

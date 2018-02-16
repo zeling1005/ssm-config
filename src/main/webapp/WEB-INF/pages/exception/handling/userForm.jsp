@@ -8,7 +8,7 @@
 <body>
 
 <h2>Search User</h2>
-<mvc:form modelAttribute="user" action="result">
+<mvc:form modelAttribute="user" action="${pageContext.request.contextPath}/exception/handling/result">
     <table>
         <tr>
             <td><mvc:label path="name">Name</mvc:label></td>

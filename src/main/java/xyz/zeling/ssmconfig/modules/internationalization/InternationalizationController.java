@@ -10,11 +10,11 @@ import org.springframework.web.servlet.ModelAndView;
  * @date 2018年1月27日 下午3:08:35 
  */
 @Controller
-@RequestMapping("internationalization")
+@RequestMapping("/internationalization")
 public class InternationalizationController {
     
-    @RequestMapping("main")
+    @RequestMapping("/main")
     public ModelAndView toMain() {
-        return new ModelAndView("internationalization/main");
+        return new ModelAndView("/internationalization/main");
     }
 }

@@ -10,10 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
  * @date 2018年1月29日 下午8:32:30
  */
 @Controller
-@RequestMapping("theme")
+@RequestMapping("/theme")
 public class ThemeController {
-    @RequestMapping("main")
+    @RequestMapping("/main")
     public ModelAndView toMain() {
-        return new ModelAndView("theme/main");
+        return new ModelAndView("/theme/main");
     }
 }

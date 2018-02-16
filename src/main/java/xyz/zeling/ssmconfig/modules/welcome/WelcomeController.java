@@ -10,11 +10,11 @@ import org.springframework.web.servlet.ModelAndView;
  * @date 2018年2月10日 上午12:27:34 
  */
 @Controller
-@RequestMapping("welcome")
+@RequestMapping("/welcome")
 public class WelcomeController {
     
-    @RequestMapping("main")
+    @RequestMapping("/main")
     public ModelAndView toMain() {
-        return new ModelAndView("welcome/main");
+        return new ModelAndView("/welcome/main");
     }
 }

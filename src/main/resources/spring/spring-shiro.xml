@@ -38,9 +38,9 @@
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<!-- override these for application-specific URLs if you like: -->
-		<property name="loginUrl" value="login" />
-		<property name="successUrl" value="loginSucc" />
-		<property name="unauthorizedUrl" value="unauthorized" />
+		<property name="loginUrl" value="/shiro/login" />
+		<property name="successUrl" value="/shiro/loginSucc" />
+		<property name="unauthorizedUrl" value="/shiro/unauthorized" />
 		<!-- The 'filters' property is not necessary since any declared javax.servlet.Filter 
 			bean defined will be automatically acquired and available via its beanName 
 			in chain definitions, but you can perform instance overrides or name aliases 

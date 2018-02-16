@@ -10,7 +10,7 @@
 <body>
 	<h2>File Upload With Servlet 3.1</h2>
 	<!-- springmvc表单上传文件 -->
-	<mvc:form modelAttribute="commonFile" action="result"
+	<mvc:form modelAttribute="commonFile" action="${pageContext.request.contextPath}/upload/result"
         enctype="multipart/form-data">
         <table>
             <tr>
@@ -22,7 +22,7 @@
             </tr>
         </table>
     </mvc:form>
-	<%-- <mvc:form modelAttribute="commonFile" action="result/two"
+	<%-- <mvc:form modelAttribute="commonFile" action="/result/two"
         enctype="multipart/form-data">
         <table>
             <tr>
@@ -36,7 +36,7 @@
     </mvc:form> --%>
     
     <!-- 普通上传文件 -->
-	<!-- <form method="post" action="result/one" enctype="multipart/form-data">
+	<!-- <form method="post" action="/result/one" enctype="multipart/form-data">
 		<input type="file" name="file"> 
 		<input type="submit" value="upload" />
 	</form> -->

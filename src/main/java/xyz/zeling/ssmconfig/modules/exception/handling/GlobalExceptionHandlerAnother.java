@@ -17,6 +17,6 @@ public class GlobalExceptionHandlerAnother implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
         Exception ex) {
-        return new ModelAndView("exception/handle/errorGlobal");
+        return new ModelAndView("/exception/handle/errorGlobal");
     }
 }

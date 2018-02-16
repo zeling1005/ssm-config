@@ -11,20 +11,20 @@ import org.springframework.web.servlet.ModelAndView;
  * @date 2018年2月10日 下午10:00:55
  */
 @Controller
-@RequestMapping("mybatis")
+@RequestMapping("/mybatis")
 public class MybatisController {
     @Autowired
     private MybatisService service;
 
-    @RequestMapping("main")
+    @RequestMapping("/main")
     public ModelAndView toMain() {
-        return new ModelAndView("mybatis/main");
+        return new ModelAndView("/mybatis/main");
     }
 
-    @RequestMapping("deleteMybatisModel")
+    @RequestMapping("/deleteMybatisModel")
     public ModelAndView deleteMybatisModel() {
         service.deleteMybatisModel();
-        return new ModelAndView("mybatis/main");
+        return new ModelAndView("/mybatis/main");
     }
 
     @RequestMapping("listMybatisModel")

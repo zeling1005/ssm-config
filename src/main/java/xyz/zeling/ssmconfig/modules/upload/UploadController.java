@@ -14,12 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
  * @date 2018年1月28日 下午6:10:23 
  */
 @Controller
-@RequestMapping("upload")
+@RequestMapping("/upload")
 public class UploadController {
     
-    @RequestMapping("main")
+    @RequestMapping("/main")
     public ModelAndView toMain() {
-        return new ModelAndView("upload/main", "commonFile", new CommonFile());
+        return new ModelAndView("/upload/main", "commonFile", new CommonFile());
     }
     
     @RequestMapping("result")
