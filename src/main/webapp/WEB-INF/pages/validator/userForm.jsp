@@ -10,7 +10,7 @@
 <body>
 
 <h2>User Registration Form</h2>
-<mvc:form modelAttribute="user" action="result.mvc">
+<mvc:form modelAttribute="user" action="result">
 	<table>
 	    <tr>
 	        <td><mvc:label path="username">User Name</mvc:label></td>

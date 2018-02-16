@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-shiro logout view.
+shiro login successful view.
+	<a href="${pageContext.request.contextPath}/shiro/logout" >logout</a>
+	<a href="${pageContext.request.contextPath}/shiro/main" >logout</a>
 </body>
 </html>

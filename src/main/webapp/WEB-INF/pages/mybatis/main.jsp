@@ -8,15 +8,15 @@
 </head>
 <body>
 	Welcome to view mybatis test page.
-	<form method="get" action="${pageContext.request.contextPath}/mybatis/listMybatisModel.mvc">
+	<form method="get" action="${pageContext.request.contextPath}/mybatis/listMybatisModel">
 		<button type="submit">list</button>
 	</form>
 	<br />
-	<form method="get" action="${pageContext.request.contextPath}/mybatis/deleteMybatisModel.mvc">
+	<form method="get" action="${pageContext.request.contextPath}/mybatis/deleteMybatisModel">
 		<button type="submit">delete</button>
 	</form>
 	<br />
-	<form method="get" action="${pageContext.request.contextPath}/mybatis/insertMybatisModel.mvc">
+	<form method="get" action="${pageContext.request.contextPath}/mybatis/insertMybatisModel">
 		<button type="submit">insert</button>
 	</form>
 </body>

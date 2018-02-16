@@ -3,6 +3,7 @@ package xyz.zeling.ssmconfig.modules.shiro;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAccount;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -27,7 +28,11 @@ public class UserRrealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        // TODO Auto-generated method stub
-        return null;
+        SimpleAccount accountInfo = new SimpleAccount(token.getPrincipal(), token.getCredentials(), "zeling");
+        Object principal = token.getPrincipal();
+        if("zeling".equals(String.valueOf(principal))) {
+            accountInfo.setCredentials("1678fff13f3a9b70308bcde3afdad0e8");
+        }
+        return accountInfo;
     }
 }

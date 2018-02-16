@@ -8,5 +8,6 @@
 </head>
 <body>
 shiro main view.
+<a href="${pageContext.request.contextPath}/shiro/logout" >logout</a>
 </body>
 </html>

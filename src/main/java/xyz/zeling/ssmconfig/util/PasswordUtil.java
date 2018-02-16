@@ -27,8 +27,6 @@ public class PasswordUtil {
      * @param args
      */
     public static void main(String[] args) {
-        // System.out.println(encryptByMD5AndSalt("123456", "admin"));
-        char[] sdj = {'1','2','3','4'};
-        System.out.println(String.valueOf(sdj));
+        System.out.println(encryptByMD5AndSalt("zeling", "zeling"));
     }
 }

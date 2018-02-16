@@ -8,5 +8,6 @@
 </head>
 <body>
 	Welcome to ssm-config project.
+	<a href="${pageContext.request.contextPath}/shiro/login">to login page.</a>
 </body>
 </html>
