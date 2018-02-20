@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-shiro login successful view.
-	<a href="${pageContext.request.contextPath}/shiro/logout" >logout</a>
-	<a href="${pageContext.request.contextPath}/shiro/main" >main</a>
+Remember me page.
 </body>
 </html>

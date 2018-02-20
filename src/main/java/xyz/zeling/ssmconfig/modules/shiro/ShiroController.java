@@ -26,6 +26,11 @@ public class ShiroController {
     public ModelAndView toMain() {
         return new ModelAndView("/shiro/main");
     }
+    
+    @RequestMapping("/user")
+    public ModelAndView user() {
+        return new ModelAndView("/shiro/user");
+    }
 
     @RequestMapping("login")
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {

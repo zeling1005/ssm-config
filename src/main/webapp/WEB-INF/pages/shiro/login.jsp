@@ -11,6 +11,7 @@
 	<form method="post" action="${pageContext.request.contextPath}/shiro/login">
 		用户名:<input type="text" name="username" /><br /> 
 		用户密码:<input type="password" name="password" /><br /> 
+		记住我:<input type="checkbox" name="rememberMe" value="true" /><br /> 
 		<input type="submit" value="用户登录" />
 	</form>
 </body>

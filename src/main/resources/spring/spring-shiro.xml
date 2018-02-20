@@ -16,6 +16,7 @@
 		<!-- 自定义密码加密算法 -->
 		<property name="credentialsMatcher" ref="customCredentialsMatcher" />
 	</bean>
+	
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<!-- Single realm app. If you have multiple realms, use the 'realms' property 
 			instead. -->
@@ -23,6 +24,7 @@
 		<!-- By default the servlet container sessions will be used. Uncomment 
 			this line to use shiro's native sessions (see the JavaDoc for more): -->
 		<!-- <property name="sessionMode" value="native"/> -->
+		<property name="rememberMeManager" ref="rememberMeManager" />
 	</bean>
 
 	<!-- For simplest integration, so that all SecurityUtils.* methods work 
@@ -34,6 +36,19 @@
 			value="org.apache.shiro.SecurityUtils.setSecurityManager" />
 		<property name="arguments" ref="securityManager" />
 	</bean>
+
+	<!-- remember cookie -->
+	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg value="rememberMe" />
+		<!-- JavaScript脚本将无法读取到Cookie信息 -->
+		<property name="httpOnly" value="true" />
+		<property name="maxAge" value="2592000" /><!-- 30天 -->
+	</bean>
+
+	<!-- rememberMe管理器 -->
+	<bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+		<property name="cookie" ref="rememberMeCookie" />
+	</bean> 
 
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
@@ -72,11 +87,13 @@
 				# more URL-to-FilterChain definitions here
 				/shiro/login = anon
 				/shiro/logout = anon
+				/shiro/user = user
 				/shiro/** = authc
 				/** = anon
 			</value>
 		</property>
 	</bean>
+	
 	<!-- 管理shiro生命周期 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
