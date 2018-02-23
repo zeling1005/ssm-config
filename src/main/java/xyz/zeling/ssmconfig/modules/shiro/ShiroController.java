@@ -12,6 +12,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -28,6 +29,7 @@ public class ShiroController {
     }
     
     @RequestMapping("/user")
+    @ResponseBody
     public ModelAndView user() {
         return new ModelAndView("/shiro/user");
     }
