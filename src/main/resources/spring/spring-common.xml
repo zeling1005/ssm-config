@@ -8,6 +8,9 @@
 	<!-- 注解bean查找配置 -->
 	<context:component-scan base-package="xyz.zeling" />
 	<mvc:annotation-driven validator="validator" />
+	
+	<!-- 静态文件处理，location是webapp下的路径，mapping是访问映射路径 -->
+	<mvc:resources location="/img/" mapping="/img/**" />
 
 	<!-- 国际化 ,Session -->
 	<bean id="localeResolver"
