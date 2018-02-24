@@ -12,6 +12,18 @@
 	<!-- 静态文件处理，location是webapp下的路径，mapping是访问映射路径 -->
 	<mvc:resources location="/img/" mapping="/img/**" />
 
+	<!-- 加载properties文件 -->
+	<bean id="propertyConfigurer" class="xyz.zeling.ssmconfig.common.PropertyConfigurer">
+		<!-- 使用多个PropertyPlaceholderConfigurer的bean时，需要指定不同的加载顺序 ,ignoreUnresolvablePlaceholders也要设置为true -->
+		<property name="order" value="1" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配多个properties文件 -->
+			<array>
+				<value>classpath:property/jdbc-mysql.properties</value>
+			</array>
+		</property>
+	</bean>
+
 	<!-- 国际化 ,Session -->
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />

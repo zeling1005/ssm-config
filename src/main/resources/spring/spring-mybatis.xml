@@ -8,18 +8,6 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
-	<!-- 加载properties文件 -->
-	<bean id="propertiesConfigurerForMybatis"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<!-- 使用多个PropertyPlaceholderConfigurer的bean时，需要指定不同的加载顺序 ,ignoreUnresolvablePlaceholders也要设置为true -->
-		<property name="order" value="1" />
-		<property name="ignoreUnresolvablePlaceholders" value="true" />
-		<property name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 -->
-			<array>
-				<value>classpath:property/jdbc-mysql.properties</value>
-			</array>
-		</property>
-	</bean>
 
 	<!-- 配置mybatis -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
