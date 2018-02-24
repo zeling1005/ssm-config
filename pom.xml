@@ -200,5 +200,12 @@
 			<version>${version.spring.security}</version>
 		</dependency>
 
+		<!-- fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.46</version>
+		</dependency>
+
 	</dependencies>
 </project>
