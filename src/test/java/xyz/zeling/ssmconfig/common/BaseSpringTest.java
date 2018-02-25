@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @description junit集成spring基类
+ * @description junit集成spring基类，可测试Service,Dao层方法
  * @author zeling
  * @date 2018年2月25日 下午4:51:11 
  */

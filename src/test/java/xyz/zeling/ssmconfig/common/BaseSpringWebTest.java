@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
- * @description junit测试controller方法基类
+ * @description junit测试controller方法基类，可模拟http请求进行测试
  * @author zeling
  * @date 2018年2月25日 下午8:16:48 
  */
