@@ -2,18 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 	<!-- 注解bean查找配置 -->
-	<context:component-scan base-package="xyz.zeling" />
-	<mvc:annotation-driven validator="validator" />
-	
-	<!-- 静态文件处理，location是webapp下的路径，mapping是访问映射路径 -->
-	<mvc:resources location="/img/" mapping="/img/**" />
+	<context:component-scan base-package="xyz.zeling" >
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
 
 	<!-- 加载properties文件 -->
 	<bean id="propertyConfigurer" class="xyz.zeling.ssmconfig.common.PropertyConfigurer">
@@ -27,58 +23,19 @@
 		</property>
 	</bean>
 
-	<!-- 国际化 ,Session -->
-	<bean id="localeResolver"
-		class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
-	<bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basename" value="classpath:i18n/messages" />
-		<property name="useCodeAsDefaultMessage" value="true" />
-		<!-- 禁止在生产环境中使用它，开发可用 -->
-		<property name="cacheSeconds" value="0" />
-		<!-- 解决从properties文件到jsp界面乱码问题 -->
-		<property name="defaultEncoding" value="UTF-8" />
-	</bean>
-
-	<!-- hibernate验证器和国际化整合 -->
-	<bean id="validator"
-		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-		<!-- 验证器包下都有默认的显示信息，这个是配置验证信息指定为哪一个还是使用默认的信息 -->
-		<!-- <property name="providerClass" value="org.hibernate.validator.HibernateValidator" 
-			/> -->
-		<property name="validationMessageSource" ref="messageSource" />
-	</bean>
-
-	<!-- 文件上传，注意bean名称唯一 -->
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="1048576" />
-		<property name="uploadTempDir" value="/temp" />
-		<property name="maxInMemorySize" value="524288" />
-		<property name="defaultEncoding" value="UTF-8" />
-	</bean>
-
-	<!-- 配置主题 -->
-	<bean id="themeSource"
-		class="org.springframework.ui.context.support.ResourceBundleThemeSource">
-		<property name="basenamePrefix" value="theme." />
-	</bean>
-
-	<bean id="themeResolver"
-		class="org.springframework.web.servlet.theme.SessionThemeResolver">
-		<property name="defaultThemeName" value="light" />
-	</bean>
-	
 	<!-- 日志切面 -->
 	<bean id="archiveLogAspect" class="xyz.zeling.ssmconfig.modules.archive.ArchiveLogAspect" />
 	<aop:config>
 		<aop:aspect id="logAspect" ref="archiveLogAspect">
-			<aop:pointcut expression="@annotation(xyz.zeling.ssmconfig.modules.archive.ArchiveLog)" id="logPointcut"/>
+			<aop:pointcut
+				expression="@annotation(xyz.zeling.ssmconfig.modules.archive.ArchiveLog)"
+				id="logPointcut" />
 			<!-- 后置通知和异常通知是根据配置顺序执行的，谁先配置谁先执行 -->
 			<!-- 前置通知 -->
 			<aop:before method="doBefore" pointcut-ref="logPointcut" />
 			<!-- 异常通知 -->
-			<aop:after-throwing method="doAfterThrowing" pointcut-ref="logPointcut" throwing="e" />
+			<aop:after-throwing method="doAfterThrowing"
+				pointcut-ref="logPointcut" throwing="e" />
 			<!-- 后置通知 -->
 			<aop:after method="doAfter" pointcut-ref="logPointcut" />
 			<!-- <aop:after-returning method="" pointcut-ref="logPointcut" /> -->
@@ -87,21 +44,16 @@
 	</aop:config>
 
 	<!-- 异常处理方式一，使用SimpleMappingExceptionResolver -->
-	<!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> 
-		<property name="defaultErrorView" value="/exception/handle/errorGlobal" /> 
-		<property name="exceptionAttribute" value="e" /> <property name="exceptionMappings"> 
-		<props> <prop key="xyz.zeling.exception.handle.modules.exception.handle.UserNotFoundException">/exception/handling/errorUser</prop> 
-		</props> </property> </bean> -->
-
-	<!-- 拦截器 -->
-	<mvc:interceptors>
-		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-			<property name="paramName" value="lang" />
-		</bean>
-		<bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor">
-			<property name="paramName" value="theme" />
-		</bean>
-	</mvc:interceptors>
-
+	<!-- <bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView" value="/exception/handle/errorGlobal" />
+		<property name="exceptionAttribute" value="e" />
+		<property name="exceptionMappings">
+			<props>
+				<prop
+					key="xyz.zeling.exception.handle.modules.exception.handle.UserNotFoundException">/exception/handling/errorUser</prop>
+			</props>
+		</property>
+	</bean> -->
 
 </beans>

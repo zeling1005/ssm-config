@@ -4,10 +4,72 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+	<!-- 注解bean查找配置 ，use-default-filters默认值为true，即会扫描Service等注解，这里使用false-->
+	<context:component-scan base-package="xyz.zeling" use-default-filters="false" >
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<!-- 注解驱动 -->
+	<mvc:annotation-driven validator="validator" />
+	
 	<!-- jsp查找 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/pages/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<!-- 静态文件处理，location是webapp下的路径，mapping是访问映射路径 -->
+	<mvc:resources location="/img/" mapping="/img/**" />
+	
+	<!-- 国际化 ,Session -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:i18n/messages" />
+		<property name="useCodeAsDefaultMessage" value="true" />
+		<!-- 禁止在生产环境中使用它，开发可用 -->
+		<property name="cacheSeconds" value="0" />
+		<!-- 解决从properties文件到jsp界面乱码问题 -->
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+	<!-- hibernate验证器和国际化整合 -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<!-- 验证器包下都有默认的显示信息，这个是配置验证信息指定为哪一个还是使用默认的信息 -->
+		<!-- <property name="providerClass" value="org.hibernate.validator.HibernateValidator" 
+			/> -->
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
+
+	<!-- 文件上传，注意bean名称唯一 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="1048576" />
+		<property name="uploadTempDir" value="/temp" />
+		<property name="maxInMemorySize" value="524288" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+	<!-- 配置主题 -->
+	<bean id="themeSource"
+		class="org.springframework.ui.context.support.ResourceBundleThemeSource">
+		<property name="basenamePrefix" value="theme." />
+	</bean>
+
+	<bean id="themeResolver"
+		class="org.springframework.web.servlet.theme.SessionThemeResolver">
+		<property name="defaultThemeName" value="light" />
+	</bean>
+	
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang" />
+		</bean>
+		<bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor">
+			<property name="paramName" value="theme" />
+		</bean>
+	</mvc:interceptors>
 </beans>
