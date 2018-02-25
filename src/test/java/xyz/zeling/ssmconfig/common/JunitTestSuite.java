@@ -1,4 +1,4 @@
-package xyz.zeling.ssmconfig.suite;
+package xyz.zeling.ssmconfig.common;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
