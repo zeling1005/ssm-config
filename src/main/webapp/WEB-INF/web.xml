@@ -9,7 +9,7 @@
 	<!-- 最好把log4j配置放在最前，因为Log4jServletContextListener和Log4jServletFilter需要最先加载 -->
 	<context-param>
 		<param-name>log4jConfiguration</param-name>
-		<param-value>classpath:log/log4j2.xml</param-value>
+		<param-value>classpath:log4j2.xml</param-value>
 	</context-param>
 	<!-- 取消自动初始化 -->
 	<context-param>
