@@ -1,5 +1,7 @@
 package xyz.zeling.ssmconfig.modules.mybatis;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -8,7 +10,11 @@ import lombok.Data;
  * @date 2018年2月10日 下午10:11:59
  */
 @Data
-public class MybatisModel {
+public class MybatisModel implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 583462762148313828L;
     /**
      * <pre>
      *  `id` int(11) NOT NULL AUTO_INCREMENT,
