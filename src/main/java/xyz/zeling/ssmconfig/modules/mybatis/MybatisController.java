@@ -27,15 +27,15 @@ public class MybatisController {
         return new ModelAndView("/mybatis/main");
     }
 
-    @RequestMapping("listMybatisModel")
+    @RequestMapping("/listMybatisModel")
     public ModelAndView listMybatisModel() {
         service.listMybatisModel();
-        return new ModelAndView("mybatis/main");
+        return new ModelAndView("/mybatis/main");
     }
 
-    @RequestMapping("insertMybatisModel")
+    @RequestMapping("/insertMybatisModel")
     public ModelAndView insertMybatisModel() {
         service.insertMybatisModel();
-        return new ModelAndView("mybatis/main");
+        return new ModelAndView("/mybatis/main");
     }
 }

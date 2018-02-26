@@ -21,19 +21,19 @@ public class ValidatorController {
         return new ModelAndView("/validator/main");
     }
 
-    @RequestMapping("form")
+    @RequestMapping("/form")
     public ModelAndView user() {
-        return new ModelAndView("validator/userForm", "user", new User());
+        return new ModelAndView("/validator/userForm", "user", new User());
     }
 
-    @RequestMapping("result")
+    @RequestMapping("/result")
     public ModelAndView processUser(@Valid User user, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("u", user);
         if (result.hasErrors()) {
-            modelAndView.setViewName("validator/userForm");
+            modelAndView.setViewName("/validator/userForm");
         } else {
-            modelAndView.setViewName("validator/userResult");
+            modelAndView.setViewName("/validator/userResult");
         }
         return modelAndView;
     }

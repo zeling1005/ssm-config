@@ -22,23 +22,23 @@ public class UploadController {
         return new ModelAndView("/upload/main", "commonFile", new CommonFile());
     }
     
-    @RequestMapping("result")
+    @RequestMapping("/result")
     public ModelAndView uploadResult(CommonFile commonFile) throws IOException {
-        ModelAndView result = new ModelAndView("upload/main");
+        ModelAndView result = new ModelAndView("/upload/main");
         result.addObject("fileLength", commonFile.getFile().getBytes().length);
         return result;
     }
     
-    @RequestMapping("result/one")
+    @RequestMapping("/result/one")
     public ModelAndView uploadResultOne(@RequestParam("file") MultipartFile file) throws IOException {
-        ModelAndView result = new ModelAndView("upload/main");
+        ModelAndView result = new ModelAndView("/upload/main");
         result.addObject("fileLength", file.getBytes().length);
         return result;
     }
     
-    @RequestMapping("result/two")
+    @RequestMapping("/result/two")
     public ModelAndView uploadResultTwo(@RequestParam("file") MultipartFile file) throws IOException {
-        ModelAndView result = new ModelAndView("upload/main");
+        ModelAndView result = new ModelAndView("/upload/main");
         result.addObject("commonFile", new CommonFile());
         result.addObject("fileLength", file.getBytes().length);
         return result;

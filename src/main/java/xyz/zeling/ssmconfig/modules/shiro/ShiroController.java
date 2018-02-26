@@ -1,5 +1,7 @@
 package xyz.zeling.ssmconfig.modules.shiro;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,7 +36,7 @@ public class ShiroController {
         return new ModelAndView("/shiro/user");
     }
 
-    @RequestMapping("login")
+    @RequestMapping("/login")
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
         boolean rememberMe = false;
         String username = String.valueOf(request.getParameter("username"));
@@ -49,24 +51,26 @@ public class ShiroController {
             current.login(loginToken);
         } catch (UnknownAccountException uae) {
             // username wasn't in the system, show them an error message?
-            return new ModelAndView("shiro/login");
+            return new ModelAndView("/shiro/login");
         } catch (IncorrectCredentialsException ice) {
             // password didn't match, try again?
-            return new ModelAndView("shiro/login");
+            return new ModelAndView("/shiro/login");
         } catch (LockedAccountException lae) {
             // account for that username is locked - can't login. Show them a message?
-            return new ModelAndView("shiro/login");
+            return new ModelAndView("/shiro/login");
         } catch (AuthenticationException ae) {
             // unexpected condition - error?
-            return new ModelAndView("shiro/login");
+            return new ModelAndView("/shiro/login");
         }
-        return new ModelAndView("shiro/loginSucc");
+        return new ModelAndView("/shiro/loginSucc");
     }
 
-    @RequestMapping("logout")
-    public ModelAndView logout() {
+    @RequestMapping("/logout")
+    public void logout(HttpServletResponse response) throws IOException {
         Subject current = SecurityUtils.getSubject();
-        current.logout();
-        return new ModelAndView("shiro/login");
+        if (current.isAuthenticated() || current.isRemembered()) {
+            current.logout();
+        }
+        response.sendRedirect("/shiro/login");
     }
 }
