@@ -6,6 +6,6 @@
 	<settings>
 		<setting name="lazyLoadingEnabled" value="true" />
 		<!-- 打印查询语句 -->
-        <setting name="logImpl" value="LOG4J2" />
+		<setting name="logImpl" value="LOG4J2" />
 	</settings>
 </configuration>
