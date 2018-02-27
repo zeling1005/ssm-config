@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+	xmlns='http://www.ehcache.org/v3'
+	xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core.xsd">
+
+	<!-- 缓存持久化目录 -->
+	<persistence directory="${user.dir}/.ehcache-data" />
+
+	<!-- Configure the thread pools. Note that there is no default one. -->
+	<thread-pools>
+		<thread-pool alias="defaultDiskPool" min-size="1" max-size="3" />
+		<thread-pool alias="defaultWriteBehindPool" min-size="1" max-size="3" />
+		<thread-pool alias="defaultCachePool" min-size="2" max-size="2" />
+	</thread-pools>
+	
+	<event-dispatch thread-pool="defaultDiskPool" />
+    <write-behind thread-pool="defaultWriteBehindPool" />
+    <disk-store thread-pool="defaultDiskPool" />
+
+	<cache alias="defaultCache">
+		<key-type>java.lang.String</key-type>
+		<value-type>java.lang.String</value-type>
+		<expiry>
+			<!-- 10分钟如果没有访问的话，就移除缓存 -->
+			<tti unit="minutes">2</tti>
+		</expiry>
+		<!-- 缓存数量上限为2000或者512MB -->
+		<resources>
+			<heap unit="entries">2000</heap>
+			<offheap unit="MB">512</offheap>
+			<disk persistent="true" unit="MB">2048</disk>
+		</resources>
+		<disk-store-settings thread-pool="defaultCachePool" writer-concurrency="2"/>
+	</cache>
+
+	<!-- 缓存模板 -->
+	<cache-template name="defaultCacheTemplate">
+		<key-type>java.lang.String</key-type>
+		<value-type>java.lang.String</value-type>
+		<resources>
+			<heap unit="entries">200</heap>
+			<offheap unit="MB">64</offheap>
+		</resources>
+	</cache-template>
+
+	<!-- <cache alias="otherCache" uses-template="defaultCacheTemplate"> <key-type>java.lang.Long</key-type> 
+		</cache> -->
+
+	<cache alias="simpleCache" uses-template="defaultCacheTemplate" />
+
+</config>

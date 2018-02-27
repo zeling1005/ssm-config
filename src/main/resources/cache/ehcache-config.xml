@@ -1,51 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-	xmlns='http://www.ehcache.org/v3'
-	xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core.xsd">
+<!DOCTYPE xml>
+<!-- 配置详细说明请参考'ehcache-reference-config.xml' -->
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false"
+	monitoring="autodetect" dynamicConfig="true">
 
-	<!-- 缓存持久化目录 -->
-	<persistence directory="${user.dir}/.ehcache-data" />
+	<!-- 如果启用磁盘缓存的话，这个是存储路径 -->
+	<diskStore path="java.io.tmpdir" />
 
-	<!-- Configure the thread pools. Note that there is no default one. -->
-	<thread-pools>
-		<thread-pool alias="defaultDiskPool" min-size="1" max-size="3" />
-		<thread-pool alias="defaultWriteBehindPool" min-size="1" max-size="3" />
-		<thread-pool alias="defaultCachePool" min-size="2" max-size="2" />
-	</thread-pools>
+	<!-- 事务 -->
+	<transactionManagerLookup
+		class="net.sf.ehcache.transaction.manager.DefaultTransactionManagerLookup"
+		properties="jndiName=java:/TransactionManager" propertySeparator=";" />
+
+	<!-- 初始化工作的话，可以配置这个 -->
+	<!-- <cacheManagerEventListenerFactory class="" properties="" /> -->
+
+	<!-- 默认缓存，timeToIdleSeconds：消亡之前的最长两次访问间隔时间，timeToLiveSeconds：消亡前的最大存活时间 -->
+	<!-- The defaultCache has an implicit name "default" which is a reserved 
+		cache name.If you specify a maxBytesLocalHeap, you can't use the maxEntriesLocalHeap 
+		attribute.timeToIdleSeconds:Sets the time to idle for an element before it 
+		expires. -->
+	<defaultCache 
+		maxEntriesLocalHeap="10000"
+		maxBytesLocalHeap="512M"
+		maxEntriesLocalDisk="10000000"
+		maxBytesLocalDisk="2G"
+		eternal="false" 
+		timeToIdleSeconds="120"
+		timeToLiveSeconds="0" 
+		diskExpiryThreadIntervalSeconds="600"
+		memoryStoreEvictionPolicy="LFU">
+		<persistence strategy="localTempSwap" />
+	</defaultCache>
 	
-	<event-dispatch thread-pool="defaultDiskPool" />
-    <write-behind thread-pool="defaultWriteBehindPool" />
-    <disk-store thread-pool="defaultDiskPool" />
-
-	<cache alias="defaultCache">
-		<key-type>java.lang.String</key-type>
-		<value-type>java.lang.String</value-type>
-		<expiry>
-			<!-- 10分钟如果没有访问的话，就移除缓存 -->
-			<tti unit="minutes">2</tti>
-		</expiry>
-		<!-- 缓存数量上限为2000或者512MB -->
-		<resources>
-			<heap unit="entries">2000</heap>
-			<offheap unit="MB">512</offheap>
-			<disk persistent="true" unit="MB">2048</disk>
-		</resources>
-		<disk-store-settings thread-pool="defaultCachePool" writer-concurrency="2"/>
+	<cache 
+		name="simpleCache"
+		maxEntriesLocalHeap="1000"
+		maxEntriesLocalDisk="1000000"
+		eternal="false" 
+		timeToIdleSeconds="60"
+		timeToLiveSeconds="0" 
+		diskExpiryThreadIntervalSeconds="300"
+		memoryStoreEvictionPolicy="LRU">
+		<persistence strategy="localTempSwap" />
 	</cache>
 
-	<!-- 缓存模板 -->
-	<cache-template name="defaultCacheTemplate">
-		<key-type>java.lang.String</key-type>
-		<value-type>java.lang.String</value-type>
-		<resources>
-			<heap unit="entries">200</heap>
-			<offheap unit="MB">64</offheap>
-		</resources>
-	</cache-template>
-
-	<!-- <cache alias="otherCache" uses-template="defaultCacheTemplate"> <key-type>java.lang.Long</key-type> 
-		</cache> -->
-
-	<cache alias="simpleCache" uses-template="defaultCacheTemplate" />
-
-</config>
+</ehcache>

@@ -13,7 +13,7 @@ import org.ehcache.xml.XmlConfiguration;
  * @author zeling
  * @date 2018年2月25日 下午11:05:25 
  */
-public class UseEhcache {
+public class UseNewEhcache {
     /**
      * @description TODO
      * @date 2018年2月25日 下午11:05:25
@@ -21,7 +21,7 @@ public class UseEhcache {
      */
     public static void main(String[] args) {
         // 初始化
-        URL ehcacheUrl = UseEhcache.class.getResource("/ehcache/ehcache-config.xml"); 
+        URL ehcacheUrl = UseNewEhcache.class.getResource("/ehcache/ehcache-config.xml"); 
         Configuration ehcacheXmlConfig = new XmlConfiguration(ehcacheUrl); 
         CacheManager ehcacheCacheManager = CacheManagerBuilder.newCacheManager(ehcacheXmlConfig);
         ehcacheCacheManager.init();
