@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
 <!-- 配置详细说明请参考'ehcache-reference-config.xml' -->
+<!-- xsi:noNamespaceSchemaLocation：ehcache.xsd会有警告无法识别，需要在eclipse配置ehcache.xsd -->
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false"
 	monitoring="autodetect" dynamicConfig="true">
 
 	<!-- 如果启用磁盘缓存的话，这个是存储路径 -->
-	<diskStore path="java.io.tmpdir" />
+	<diskStore path="java.io.tmpdir/.ehcachedata" />
 
-	<!-- 事务 -->
+	<!-- 事务寻找 -->
 	<transactionManagerLookup
 		class="net.sf.ehcache.transaction.manager.DefaultTransactionManagerLookup"
 		properties="jndiName=java:/TransactionManager" propertySeparator=";" />
@@ -16,33 +17,39 @@
 	<!-- 初始化工作的话，可以配置这个 -->
 	<!-- <cacheManagerEventListenerFactory class="" properties="" /> -->
 
-	<!-- 默认缓存，timeToIdleSeconds：消亡之前的最长两次访问间隔时间，timeToLiveSeconds：消亡前的最大存活时间 -->
+	<!-- 默认缓存，timeToIdleSeconds：消亡之前的最长两次访问间隔时间，timeToLiveSeconds：消亡前的最大存活时间，
+		之所以不用defaultCache元素，是因为defaultCache无法使用maxBytesLocalHeap等属性 -->
 	<!-- The defaultCache has an implicit name "default" which is a reserved 
 		cache name.If you specify a maxBytesLocalHeap, you can't use the maxEntriesLocalHeap 
 		attribute.timeToIdleSeconds:Sets the time to idle for an element before it 
 		expires. -->
-	<defaultCache 
+	<cache 
+		name="defaultCache"
 		maxEntriesLocalHeap="10000"
-		maxBytesLocalHeap="512M"
 		maxEntriesLocalDisk="10000000"
-		maxBytesLocalDisk="2G"
+		maxBytesLocalHeap="1G"
+		maxBytesLocalDisk="10G"
 		eternal="false" 
 		timeToIdleSeconds="120"
 		timeToLiveSeconds="0" 
 		diskExpiryThreadIntervalSeconds="600"
-		memoryStoreEvictionPolicy="LFU">
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off">
 		<persistence strategy="localTempSwap" />
-	</defaultCache>
+	</cache>
 	
 	<cache 
 		name="simpleCache"
 		maxEntriesLocalHeap="1000"
 		maxEntriesLocalDisk="1000000"
+		maxBytesLocalHeap="512M"
+		maxBytesLocalDisk="5G"
 		eternal="false" 
 		timeToIdleSeconds="60"
 		timeToLiveSeconds="0" 
 		diskExpiryThreadIntervalSeconds="300"
-		memoryStoreEvictionPolicy="LRU">
+		memoryStoreEvictionPolicy="LRU"
+		transactionalMode="off">
 		<persistence strategy="localTempSwap" />
 	</cache>
 
