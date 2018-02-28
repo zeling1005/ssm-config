@@ -22,9 +22,14 @@
 		<property name="configLocation" value="classpath:cache/ehcache-config.xml" />
 		<property name="cacheManagerName" value="ehcacheManager" />
 	</bean>
-	<!-- 可使用事务的缓存管理器代理，代理ehcache缓存管理器，其实ehcache在spring cache中已经有实现事务的缓存管理器，但是为了以后集成其它缓存，使用的是复合缓存管理器 -->
-	<bean id="ehcacheManagerProxy"
-		class="org.springframework.cache.transaction.TransactionAwareCacheManagerProxy">
-		<property name="targetCacheManager" ref="ehcacheManager" />
+	<!-- spring为ehcache实现的缓存管理器 -->
+	<bean id="ehcacheManagerProxy" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager" ref="ehcacheManager" />
+		<property name="transactionAware" value="true" />
 	</bean>
+	<!-- 可使用事务的缓存管理器代理，代理具体缓存管理器 -->
+	<!-- <bean id="xxx"
+		class="org.springframework.cache.transaction.TransactionAwareCacheManagerProxy">
+		<property name="targetCacheManager" ref="xxx" />
+	</bean> -->
 </beans>

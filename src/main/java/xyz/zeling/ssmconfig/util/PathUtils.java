@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author zeling
  * @date 2018年2月24日 下午9:12:34
  */
-public class PathUtil {
+public class PathUtils {
     
     /**
      * @description 获取项目根路径
@@ -26,7 +26,7 @@ public class PathUtil {
     public static String getClasspathPath() {
         // PathUtil.class.getClassLoader().getResource("").getPath() 获取项目类路径
         // PathUtil.class.getClassLoader().getResource("/").getPath() 是错误的写法
-        return PathUtil.class.getResource("/").getPath();
+        return PathUtils.class.getResource("/").getPath();
     }
     
     /**

@@ -4,11 +4,11 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 
 /**
- * @description 密码工具
+ * @description 密码工具类
  * @author zeling
  * @date 2018年2月12日 上午1:05:29
  */
-public class PasswordUtil {
+public class PasswordUtils {
     /**
      * @description 密码使用MD5盐值加密
      * @date 2018年2月12日 上午1:14:17

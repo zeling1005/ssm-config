@@ -26,8 +26,8 @@
 	<!-- maxEntriesLocalHeap="10000" maxEntriesLocalDisk="10000000" -->
 	<cache 
 		name="defaultEhcache"
-		maxBytesLocalHeap="1G"
-		maxBytesLocalDisk="10G"
+		maxBytesLocalHeap="128M"
+		maxBytesLocalDisk="1G"
 		eternal="false" 
 		timeToIdleSeconds="120"
 		timeToLiveSeconds="0" 
@@ -40,8 +40,8 @@
 	<!-- maxEntriesLocalHeap="1000",maxEntriesLocalDisk="1000000" -->
 	<cache 
 		name="simpleEhcache"
-		maxBytesLocalHeap="512M"
-		maxBytesLocalDisk="5G"
+		maxBytesLocalHeap="32M"
+		maxBytesLocalDisk="512M"
 		eternal="false" 
 		timeToIdleSeconds="60"
 		timeToLiveSeconds="0" 

@@ -5,7 +5,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 
-import xyz.zeling.ssmconfig.util.PasswordUtil;
+import xyz.zeling.ssmconfig.util.PasswordUtils;
 
 /**
  * @description 自定义加密
@@ -20,7 +20,7 @@ public class CustomCredentialsMatcher extends SimpleCredentialsMatcher {
             UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;  
             String username = usernamePasswordToken.getUsername();
             String password = String.valueOf(usernamePasswordToken.getPassword());
-            Object tokenCredentials = PasswordUtil.encryptByMD5AndSalt(password, username); 
+            Object tokenCredentials = PasswordUtils.encryptByMD5AndSalt(password, username); 
             Object accountCredentials = getCredentials(info);  
             return equals(tokenCredentials, accountCredentials);  
         }
