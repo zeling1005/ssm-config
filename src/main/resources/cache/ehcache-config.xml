@@ -7,7 +7,7 @@
 	monitoring="autodetect" dynamicConfig="true">
 
 	<!-- 如果启用磁盘缓存的话，这个是存储路径 -->
-	<diskStore path="java.io.tmpdir/.ehcachedata" />
+	<diskStore path="user.dir/.ehcachedata" />
 
 	<!-- 事务寻找 -->
 	<transactionManagerLookup
@@ -23,10 +23,9 @@
 		cache name.If you specify a maxBytesLocalHeap, you can't use the maxEntriesLocalHeap 
 		attribute.timeToIdleSeconds:Sets the time to idle for an element before it 
 		expires. -->
+	<!-- maxEntriesLocalHeap="10000" maxEntriesLocalDisk="10000000" -->
 	<cache 
-		name="defaultCache"
-		maxEntriesLocalHeap="10000"
-		maxEntriesLocalDisk="10000000"
+		name="defaultEhcache"
 		maxBytesLocalHeap="1G"
 		maxBytesLocalDisk="10G"
 		eternal="false" 
@@ -38,10 +37,9 @@
 		<persistence strategy="localTempSwap" />
 	</cache>
 	
+	<!-- maxEntriesLocalHeap="1000",maxEntriesLocalDisk="1000000" -->
 	<cache 
-		name="simpleCache"
-		maxEntriesLocalHeap="1000"
-		maxEntriesLocalDisk="1000000"
+		name="simpleEhcache"
 		maxBytesLocalHeap="512M"
 		maxBytesLocalDisk="5G"
 		eternal="false" 
