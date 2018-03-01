@@ -17,7 +17,7 @@
 		<property name="fallbackToNoOpCache" value="true" />
 	</bean>
 	<!-- 工厂bean，获取ehcache缓存管理器 -->
-	<bean id="ehcacheManager"
+	<bean id="ehcacheManager" name="${ehcache.old.cacheManagerBeanName}"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="classpath:cache/ehcache-config.xml" />
 		<property name="cacheManagerName" value="ehcacheManager" />

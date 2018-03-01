@@ -24,10 +24,9 @@
 		attribute.timeToIdleSeconds:Sets the time to idle for an element before it 
 		expires. -->
 	<!-- maxEntriesLocalHeap="10000" maxEntriesLocalDisk="10000000" -->
-	<cache 
-		name="defaultEhcache"
-		maxBytesLocalHeap="128M"
-		maxBytesLocalDisk="1G"
+	<defaultCache
+		maxEntriesLocalHeap="10000" 
+		maxEntriesLocalDisk="10000000"
 		eternal="false" 
 		timeToIdleSeconds="120"
 		timeToLiveSeconds="0" 
@@ -35,13 +34,25 @@
 		memoryStoreEvictionPolicy="LFU"
 		transactionalMode="off">
 		<persistence strategy="localTempSwap" />
+	</defaultCache>
+	
+	<cache 
+		name="${ehcache.old.shiroRealmCacheName}"
+		maxEntriesLocalHeap="1000"
+		maxEntriesLocalDisk="1000000"
+		eternal="false" 
+		timeToIdleSeconds="60"
+		timeToLiveSeconds="0" 
+		diskExpiryThreadIntervalSeconds="300"
+		memoryStoreEvictionPolicy="LRU"
+		transactionalMode="off">
+		<persistence strategy="localTempSwap" />
 	</cache>
 	
-	<!-- maxEntriesLocalHeap="1000",maxEntriesLocalDisk="1000000" -->
 	<cache 
-		name="simpleEhcache"
-		maxBytesLocalHeap="32M"
-		maxBytesLocalDisk="512M"
+		name="${ehcache.old.shiroSessionDaoCacheName}"
+		maxEntriesLocalHeap="1000"
+		maxEntriesLocalDisk="1000000"
 		eternal="false" 
 		timeToIdleSeconds="60"
 		timeToLiveSeconds="0" 

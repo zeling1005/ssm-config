@@ -19,7 +19,7 @@ public class UserRrealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        // TODO Auto-generated method stub
+        // 可使用缓存
         return null;
     }
 
@@ -28,6 +28,7 @@ public class UserRrealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        // 可使用缓存
         SimpleAccount accountInfo = new SimpleAccount(token.getPrincipal(), token.getCredentials(), "zeling");
         Object principal = token.getPrincipal();
         if("zeling".equals(String.valueOf(principal))) {

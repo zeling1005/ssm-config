@@ -21,7 +21,7 @@ public class EhcacheController {
     @ResponseBody
     public Object test() {
         CompositeCacheManager cacheManagers = SpringContextUtils.getApplicationContext().getBean(CompositeCacheManager.class);
-        Cache cache = cacheManagers.getCache("defaultEhcache");
+        Cache cache = cacheManagers.getCache("default");
         cache.put("oneKey", "oneValue");
         return cache.get("oneKey").get();
     }

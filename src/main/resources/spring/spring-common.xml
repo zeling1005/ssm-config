@@ -12,13 +12,14 @@
 	</context:component-scan>
 
 	<!-- 加载properties文件 -->
-	<bean id="propertyConfigurer" class="xyz.zeling.ssmconfig.common.PropertyConfigurer">
+	<bean id="propertyConfigurer" class="xyz.zeling.ssmconfig.common.PropertyConfigurer" lazy-init="false">
 		<!-- 使用多个PropertyPlaceholderConfigurer的bean时，需要指定不同的加载顺序 ,ignoreUnresolvablePlaceholders也要设置为true -->
 		<property name="order" value="1" />
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 		<property name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配多个properties文件 -->
 			<array>
 				<value>classpath:property/jdbc-mysql.properties</value>
+				<value>classpath:property/cache.properties</value>
 			</array>
 		</property>
 	</bean>

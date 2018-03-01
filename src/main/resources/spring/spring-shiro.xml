@@ -9,11 +9,16 @@
 	<bean id="sessionDAO"
 		class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
 		<!-- 设置session缓存的名字，这个名字可以任意 -->
-		<property name="activeSessionsCacheName" value="activeSessionCache" />
 		<!-- 定义该Session DAO操作中所使用的ID生成器 -->
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
 		<!-- 自定义缓存管理器 -->
-		<!-- <property name="cacheManager" ref="cacheManager" /> -->
+		<property name="cacheManager" ref="shiroEhcacheCacheManager" />
+	</bean>
+	<!-- 缓存配置 -->
+	<bean id="shiroEhcacheCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManager">
+			<ref bean="${ehcache.old.cacheManagerBeanName}"/>
+		</property>
 	</bean>
 	<!-- 配置需要向Cookie中保存数据的配置模版 -->
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
@@ -60,17 +65,20 @@
 	<bean id="userRrealm" class="xyz.zeling.ssmconfig.modules.shiro.UserRrealm">
 		<!-- 自定义密码加密算法 -->
 		<property name="credentialsMatcher" ref="customCredentialsMatcher" />
+		<property name="cachingEnabled" value="true" />
+		<property name="authenticationCachingEnabled" value="true" />
+		<property name="authenticationCacheName" value="${ehcache.old.shiroRealmCacheName}" />
+		<property name="authorizationCachingEnabled" value="true" />
+		<property name="authorizationCacheName" value="${ehcache.old.shiroRealmCacheName}" />
 	</bean>
 	
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<!-- Single realm app. If you have multiple realms, use the 'realms' property 
 			instead. -->
 		<property name="realm" ref="userRrealm" />
-		<!-- By default the servlet container sessions will be used. Uncomment 
-			this line to use shiro's native sessions (see the JavaDoc for more): -->
-		<!-- <property name="sessionMode" value="native"/> -->
 		<property name="rememberMeManager" ref="rememberMeManager" />
 		<property name="sessionManager" ref="sessionManager" />
+		<property name="cacheManager" ref="shiroEhcacheCacheManager" />
 	</bean>
 
 	<!-- For simplest integration, so that all SecurityUtils.* methods work 
