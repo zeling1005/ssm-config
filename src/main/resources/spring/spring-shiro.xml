@@ -9,6 +9,7 @@
 	<bean id="sessionDAO"
 		class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
 		<!-- 设置session缓存的名字，这个名字可以任意 -->
+		<property name="activeSessionsCacheName" value="${ehcache.old.shiroSessionDaoCacheName}" />
 		<!-- 定义该Session DAO操作中所使用的ID生成器 -->
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
 		<!-- 自定义缓存管理器 -->
@@ -32,8 +33,8 @@
 	<!-- 定义会话管理器的操作 -->
 	<bean id="sessionManager"
 		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-		<!-- 定义的是全局的session会话超时时间，此操作会覆盖web.xml文件中的超时时间配置 -->
-		<property name="globalSessionTimeout" value="3600000" />
+		<!-- 定义的是全局的session会话超时时间，此操作会覆盖web.xml文件中的超时时间配置，十分钟超时 -->
+		<property name="globalSessionTimeout" value="600000" />
 		<!-- 删除所有无效的Session对象，此时的session被保存在了内存里面 -->
 		<property name="deleteInvalidSessions" value="true" />
 		<!-- 使用默认清理器，定时清理失效会话, 清理用户直接关闭浏览器造成的孤立会话 -->

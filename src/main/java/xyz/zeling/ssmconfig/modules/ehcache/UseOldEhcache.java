@@ -23,7 +23,9 @@ public class UseOldEhcache {
         CacheManager ehcacheManager = CacheManager.create(url);
         
         // 获取缓存对象
-        Cache defaultEhcache = ehcacheManager.getCache("defaultEhcache");
+        Cache defaultEhcache = ehcacheManager.getCache("shiroSessionDaoCache");
+        
+        // System.out.println("oneKey:" + defaultEhcache.get("oneKey").getObjectValue());
         
         // 存
         Element addElement = new Element("oneKey", "oneValue");

@@ -17,18 +17,17 @@
 	<!-- 初始化工作的话，可以配置这个 -->
 	<!-- <cacheManagerEventListenerFactory class="" properties="" /> -->
 
-	<!-- 默认缓存，timeToIdleSeconds：消亡之前的最长两次访问间隔时间，timeToLiveSeconds：消亡前的最大存活时间，
-		之所以不用defaultCache元素，是因为defaultCache无法使用maxBytesLocalHeap等属性 -->
+	<!-- 默认缓存，timeToIdleSeconds：消亡之前的最长两次访问间隔时间，timeToLiveSeconds：消亡前的最大存活时间 -->
 	<!-- The defaultCache has an implicit name "default" which is a reserved 
 		cache name.If you specify a maxBytesLocalHeap, you can't use the maxEntriesLocalHeap 
 		attribute.timeToIdleSeconds:Sets the time to idle for an element before it 
 		expires. -->
 	<!-- maxEntriesLocalHeap="10000" maxEntriesLocalDisk="10000000" -->
 	<defaultCache
-		maxEntriesLocalHeap="10000" 
-		maxEntriesLocalDisk="10000000"
+		maxEntriesLocalHeap="1000" 
+		maxEntriesLocalDisk="1000000"
 		eternal="false" 
-		timeToIdleSeconds="120"
+		timeToIdleSeconds="1800"
 		timeToLiveSeconds="0" 
 		diskExpiryThreadIntervalSeconds="600"
 		memoryStoreEvictionPolicy="LFU"
@@ -36,30 +35,37 @@
 		<persistence strategy="localTempSwap" />
 	</defaultCache>
 	
+	
+	<!-- We want eternal="true" and no timeToIdle or timeToLive settings because Shiro manages session
+         expirations explicitly.  If we set it to false and then set corresponding timeToIdle and timeToLive properties,
+         ehcache would evict sessions without Shiro's knowledge, which would cause many problems
+        (e.g. "My Shiro session timeout is 30 minutes - why isn't a session available after 2 minutes?"
+               Answer - ehcache expired it due to the timeToIdle property set to 120 seconds.)
+
+        diskPersistent=true since we want an enterprise session management feature - ability to use sessions after
+        even after a JVM restart.  -->
 	<cache 
-		name="${ehcache.old.shiroRealmCacheName}"
+		name="shiroRealmCache"
 		maxEntriesLocalHeap="1000"
 		maxEntriesLocalDisk="1000000"
-		eternal="false" 
-		timeToIdleSeconds="60"
-		timeToLiveSeconds="0" 
-		diskExpiryThreadIntervalSeconds="300"
-		memoryStoreEvictionPolicy="LRU"
-		transactionalMode="off">
-		<persistence strategy="localTempSwap" />
+		overflowToDisk="true"
+		eternal="true"
+        timeToLiveSeconds="0"
+        timeToIdleSeconds="0"
+        diskPersistent="true"
+		diskExpiryThreadIntervalSeconds="600">
 	</cache>
 	
 	<cache 
-		name="${ehcache.old.shiroSessionDaoCacheName}"
+		name="shiroSessionDaoCache"
 		maxEntriesLocalHeap="1000"
 		maxEntriesLocalDisk="1000000"
-		eternal="false" 
-		timeToIdleSeconds="60"
-		timeToLiveSeconds="0" 
-		diskExpiryThreadIntervalSeconds="300"
-		memoryStoreEvictionPolicy="LRU"
-		transactionalMode="off">
-		<persistence strategy="localTempSwap" />
+		overflowToDisk="true"
+		eternal="true"
+        timeToLiveSeconds="0"
+        timeToIdleSeconds="0"
+        diskPersistent="true"
+		diskExpiryThreadIntervalSeconds="600">
 	</cache>
 
 </ehcache>
