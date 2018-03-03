@@ -62,6 +62,14 @@
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 
+	<!-- 添加session监听器 -->
+	<!-- <listener>
+		<listener-class>xyz.zeling.ssmconfig.modules.shiro.WebHttpSessionListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>xyz.zeling.ssmconfig.modules.shiro.WebHttpSessionAttributeListener</listener-class>
+	</listener> -->
+
 	<!-- servlet调度 -->
 	<!-- The front controller of this Spring Web application, responsible for 
 		handling all application requests -->

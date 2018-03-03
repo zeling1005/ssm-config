@@ -12,8 +12,6 @@
 		<property name="activeSessionsCacheName" value="${ehcache.old.shiroSessionDaoCacheName}" />
 		<!-- 定义该Session DAO操作中所使用的ID生成器 -->
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
-		<!-- 自定义缓存管理器 -->
-		<property name="cacheManager" ref="shiroEhcacheCacheManager" />
 	</bean>
 	<!-- 缓存配置 -->
 	<bean id="shiroEhcacheCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
@@ -30,6 +28,8 @@
 		<!-- 定义Cookie的过期时间，单位为秒，如果设置为-1表示浏览器关闭，则Cookie消失 -->
 		<property name="maxAge" value="-1" />
 	</bean>
+	<!-- session 状态监听 -->
+	<bean id="sessionListener" class="xyz.zeling.ssmconfig.modules.shiro.ShiroSessionListener" />
 	<!-- 定义会话管理器的操作 -->
 	<bean id="sessionManager"
 		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
@@ -49,6 +49,11 @@
 		<property name="sessionIdCookie" ref="sessionIdCookie" />
 		<!-- 定义sessionIdCookie模版可以进行操作的启用 -->
 		<property name="sessionIdCookieEnabled" value="true" />
+		<property name="sessionListeners">
+			<list>
+				<ref bean="sessionListener"/>
+			</list>
+		</property>
 	</bean>
 	<!-- 配置session的定时验证检测程序类，以让无效的session释放 -->
     <!-- <bean id="sessionValidationScheduler"
