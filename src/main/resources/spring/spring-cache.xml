@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	<!-- 开启缓存注解，注意如果是proxy实现springAOP，那么当对象的方法是内部调用（即 this 引用）而不是外部引用，则会导致 proxy失效，那么我们的切面就失效，也就是说 
 		@Cacheable、@CachePut和 @CacheEvict等都会失效；如果是aspectj实现springAOP，那么@Cacheable和@CacheInvalidate需要使用在具体的类上，不能使用在接口上 -->
-	<cache:annotation-driven cache-manager="cacheManagers"
-		mode="aspectj" proxy-target-class="true" />
+	<cache:annotation-driven cache-manager="cacheManagers" />
+	<!-- <cache:annotation-driven cache-manager="cacheManagers" mode="aspectj" /> -->
+	<!-- 当mode=aspectj时，需要配置这个，如果使用默认的就不用 -->
+	<!-- <context:load-time-weaver /> -->
 	<!-- 复合缓存管理器，可添加多个缓存管理器 -->
 	<bean id="cacheManagers" class="org.springframework.cache.support.CompositeCacheManager">
 		<property name="cacheManagers">
