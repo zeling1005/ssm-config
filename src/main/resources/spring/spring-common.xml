@@ -2,10 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	<!-- 注解bean查找配置 -->
 	<context:component-scan base-package="xyz.zeling" >
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -23,25 +21,5 @@
 			</array>
 		</property>
 	</bean>
-
-	<!-- 日志切面 -->
-	<bean id="archiveLogAspect" class="xyz.zeling.ssmconfig.modules.archive.ArchiveLogAspect" />
-	<aop:config>
-		<aop:aspect id="logAspect" ref="archiveLogAspect">
-			<aop:pointcut
-				expression="@annotation(xyz.zeling.ssmconfig.modules.archive.ArchiveLog)"
-				id="logPointcut" />
-			<!-- 后置通知和异常通知是根据配置顺序执行的，谁先配置谁先执行 -->
-			<!-- 前置通知 -->
-			<aop:before method="doBefore" pointcut-ref="logPointcut" />
-			<!-- 异常通知 -->
-			<aop:after-throwing method="doAfterThrowing"
-				pointcut-ref="logPointcut" throwing="e" />
-			<!-- 后置通知 -->
-			<aop:after method="doAfter" pointcut-ref="logPointcut" />
-			<!-- <aop:after-returning method="" pointcut-ref="logPointcut" /> -->
-			<!-- <aop:around method="" pointcut-ref="logPointcut" /> -->
-		</aop:aspect>
-	</aop:config>
 
 </beans>
